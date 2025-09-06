@@ -1,0 +1,40 @@
+<!-- 15. Introduction to SQL
+        What is a DB (Database)
+        Introduction to SQL DB
+        Introduction to NoSQL DB
+        SQL vs NoSQL
+        Installing MySQL
+        Connecting App to DB
+        Creating homes Table
+        Querying homes in App
+        Adding DB in Models
+        Adding Home in Model
+        Implementing Model using Where
+        Introduction to SQL -->
+
+
+<!-- 15.9 Adding DB in Models
+        1.Remove the test code from app.js
+        2.Change the Home.js model file to remove all code related to file operations.
+        3.Import the DB from the utils.
+        4.Change photoUrl to imageUrl and houseName to name in the entire project.
+        5.Implement  find:
+                a.Using the query we used while testing.
+                b. find will not take a callback but return a promise.
+
+        6.Go to StoreController and use the promise to get the data here.
+        7.Fix all the usages of  find.
+
+15.10 Adding Home in Model
+        1.Add the description field in home. Change constructor and usag
+        2.Make changes in UI to input and show it everywhere.
+        3.Implement the save method using the insert query.
+        4.Change the usages of save method to use the promise.
+
+15.11 Implementing Model using Where
+
+
+Practise-Milestone :
+        Take your airbnb forward:
+                ● Change the save method to support both edit and insert
+                functionality. -->

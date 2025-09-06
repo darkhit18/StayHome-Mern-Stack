@@ -1,0 +1,11 @@
+<form action="/favourite" method="POST" class="w-full">
+  <!-- ID bhejna mandatory hai -->
+  <input type="hidden" name="homeId" value="<%= home._id %>">
+  <!-- (defensive) kuch projects 'id' read karte hain -->
+  <input type="hidden" name="id" value="<%= home._id %>">
+
+  <button type="submit"
+          class="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-xl font-semibold shadow-md transition transform hover:scale-105">
+    Add to Favourite
+  </button>
+</form>

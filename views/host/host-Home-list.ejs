@@ -1,0 +1,81 @@
+<%- include('../partials/head')%>
+</head>
+
+<body class="bg-gray-200">
+  <%- include('../partials/nav')%>
+
+  <main class="container mx-auto bg-white shadow-xl rounded-2xl p-8 mt-10 max-w-6xl">
+    <!-- Heading -->
+    <h2 class="text-3xl md:text-4xl text-gray-800 font-bold text-center mb-10">
+      Hey Host! Here are your Homes:
+    </h2>
+
+    <!-- Homes Grid -->
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 list-none p-0 m-0">
+      <% registeredHomes.forEach(home => { %>
+        <li class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-transform transform hover:-translate-y-1 duration-300">
+          
+          <!-- Image -->
+          <img class="h-52 w-full object-cover" 
+               src="<%= home.photo %>" 
+               alt="<%= home.homeName %>">
+
+          <!-- Card Body -->
+          <div class="p-5 flex flex-col h-full">
+            
+            <!-- Title + Rating -->
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-gray-800 truncate">
+                <%= home.homeName %>
+              </h3>
+              <div class="flex items-center">
+                <svg class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 
+                    1.902 0l1.07 3.292a1 1 0 
+                    00.95.69h3.462c.969 0 1.371 1.24.588 
+                    1.81l-2.8 2.034a1 1 0 
+                    00-.364 1.118l1.07 3.292c.3.921-.755 
+                    1.688-1.54 1.118l-2.8-2.034a1 1 0 
+                    00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 
+                    1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 
+                    1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <span class="ml-1 text-gray-600 text-sm">
+                  <%= home.Rating %>/5
+                </span>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <p class="mt-2 text-gray-600 text-sm flex items-center">
+              <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
+              <%= home.location %>
+            </p>
+
+            <!-- Price -->
+            <div class="mt-4">
+              <span class="text-2xl font-bold text-indigo-600">₹<%= home.Price %></span>
+              <span class="text-gray-500">/night</span>
+            </div>
+
+            <!-- Actions -->
+            <div class="mt-5 flex gap-3">
+              <a href="/host/edit-home/<%=home._id%>?editing=true" 
+                 class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-3 rounded-lg text-center font-medium transition">
+                Edit
+              </a>
+              <form action="/host/delete-home/<%=home._id%>" method="post" class="flex-1">
+                <button type="submit" 
+                        class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-3 rounded-lg font-medium transition">
+                  Delete
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+  </main>
+</body>
+</html>

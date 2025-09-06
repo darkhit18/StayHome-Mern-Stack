@@ -1,0 +1,119 @@
+<header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg">
+  <nav class="container mx-auto flex justify-between items-center px-6 py-4">
+
+    <!-- Left Side: Brand -->
+    <div class="flex items-center space-x-6">
+      <a href="/"
+        class="text-2xl font-extrabold tracking-wide flex items-center space-x-2 hover:scale-105 transition-transform">
+        <i data-lucide="home" class="w-6 h-6 text-yellow-300"></i>
+        <span>airbnb</span>
+      </a>
+    </div>
+
+    <!-- Desktop Links (hidden on small screens) -->
+    <div class="hidden md:flex items-center space-x-6">
+      <% if (isLoggedIn) { %>
+        <% if (user && user.userType==='guest' ) { %>
+          <a href="/homes"
+            class="<%= currentPage === 'Home' ? 'bg-purple-800 font-bold' : 'hover:bg-purple-800' %> px-3 py-2 rounded-lg flex items-center space-x-2 transition">
+            <i data-lucide="list" class="w-5 h-5"></i>
+            <span>Homes</span>
+          </a>
+
+          <a href="/favourite"
+            class="<%= currentPage === 'favourites' ? 'bg-purple-800 font-bold' : 'hover:bg-purple-800' %> px-3 py-2 rounded-lg flex items-center space-x-2 transition">
+            <i data-lucide="heart" class="w-5 h-5 text-pink-400"></i>
+            <span>Favourites</span>
+          </a>
+
+          <a href="/bookings"
+            class="<%= currentPage === 'bookings' ? 'bg-purple-800 font-bold' : 'hover:bg-purple-800' %> px-3 py-2 rounded-lg flex items-center space-x-2 transition">
+            <i data-lucide="calendar" class="w-5 h-5 text-green-300"></i>
+            <span>Bookings</span>
+          </a>
+          <% } else { %>
+
+            <a href="/host/host-Home-list"
+              class="<%= currentPage === 'host-homes' ? 'bg-purple-800 font-bold' : 'hover:bg-purple-800' %> px-3 py-2 rounded-lg flex items-center space-x-2 transition">
+              <i data-lucide="building" class="w-5 h-5 text-blue-300"></i>
+              <span>Host Homes</span>
+            </a>
+
+            <a href="/host/add-home"
+              class="<%= currentPage === 'Add-Home' ? 'bg-purple-800 font-bold' : 'hover:bg-purple-800' %> px-3 py-2 rounded-lg flex items-center space-x-2 transition">
+              <i data-lucide="plus-circle" class="w-5 h-5 text-yellow-300"></i>
+              <span>Add Home</span>
+            </a>
+            <% } %>
+              <% } %>
+    </div>
+
+    <!-- Right Side Auth Buttons (desktop only) -->
+    <div class="hidden md:flex items-center space-x-4">
+      <% if (!isLoggedIn) { %>
+        <a href="/signup"
+          class="<%= currentPage === 'signup' ? 'bg-yellow-500 text-black font-bold' : 'hover:bg-yellow-400 text-black' %> px-4 py-2 rounded-xl shadow-md flex items-center space-x-2 transition">
+          <i data-lucide="user-plus" class="w-5 h-5"></i>
+          <span>Signup</span>
+        </a>
+
+        <a href="/login"
+          class="<%= currentPage === 'login' ? 'bg-green-500 text-white font-bold' : 'hover:bg-green-400' %> px-4 py-2 rounded-xl shadow-md flex items-center space-x-2 transition">
+          <i data-lucide="log-in" class="w-5 h-5"></i>
+          <span>Login</span>
+        </a>
+        <% } else { %>
+          <form action="/logout" method="post">
+            <button type="submit"
+              class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-xl shadow-md font-semibold flex items-center space-x-2 transition">
+              <i data-lucide="log-out" class="w-5 h-5"></i>
+              <span>Logout</span>
+            </button>
+          </form>
+          <% } %>
+    </div>
+
+    <!-- Hamburger Menu Button (mobile only) -->
+    <div class="md:hidden">
+      <button id="menu-btn" class="focus:outline-none">
+        <i data-lucide="menu" class="w-7 h-7"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Dropdown Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-gradient-to-r from-purple-700 to-indigo-700 px-6 py-4 space-y-3">
+    <% if (isLoggedIn) { %>
+      <% if (user && user.userType==='guest' ) { %>
+          <a href="/homes" class="block px-3 py-2 rounded-lg hover:bg-purple-800">Homes</a>
+          <a href="/favourite" class="block px-3 py-2 rounded-lg hover:bg-purple-800">Favourites</a>
+          <a href="/bookings" class="block px-3 py-2 rounded-lg hover:bg-purple-800">Bookings</a>
+      <% } else { %>
+            <a href="/host/host-Home-list" class="block px-3 py-2 rounded-lg hover:bg-purple-800">Host Homes</a>
+            <a href="/host/add-home" class="block px-3 py-2 rounded-lg hover:bg-purple-800">Add Home</a>
+      <% } %>
+            <form action="/logout" method="post" class="mt-3">
+              <button type="submit"
+                class="w-full bg-red-500 hover:bg-red-600 px-4 py-2 rounded-xl shadow-md font-semibold transition">
+                Logout
+              </button>
+            </form>
+    <% } else { %>
+              <a href="/signup" class="block bg-yellow-500 text-black px-4 py-2 rounded-xl shadow-md">Signup</a>
+              <a href="/login" class="block bg-green-500 text-white px-4 py-2 rounded-xl shadow-md mt-2">Login</a>
+    <% } %>
+  </div>
+</header>
+
+<!-- Lucide Script -->
+<script src="https://unpkg.com/lucide@0.451.0"></script>
+<script>
+  lucide.createIcons();
+
+  const menuBtn = document.getElementById("menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+</script>
