@@ -27,12 +27,23 @@ app.set("views", "views");
 // Environment variables from .env
 const DB_PATH = process.env.MONGO_URI;
 const PORT = process.env.PORT || 3010;
-const SESSION_SECRET = process.env.SESSION_SECRET;
+const SESSION_SECRET = process.env.SESSION_SECRET || "default_secret";
+
+if (!DB_PATH) {
+  console.error(" MONGO_URI is missing in .env file");
+}
+if (!process.env.SESSION_SECRET) {
+  console.warn(" SESSION_SECRET not set. Using default secret.");
+}
 
 // MongoDB session store
 const store = new MongoDBStore({
   uri: DB_PATH,
   collection: "sessions",
+});
+
+store.on("error", (err) => {
+  console.log("Session store error:", err);
 });
 
 // Multer config
@@ -86,14 +97,13 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  req.isLoggedIn = req.session.isLoggedIn;
+  req.isLoggedIn = req.session.isLoggedIn || false;
   next();
 });
 
 // Routes
+app.use(authRouter); // Auth routes first
 app.use(storeRouter);
-app.use("/host", hostRouter);
-app.use(authRouter);
 
 // Protect /host route
 app.use("/host", (req, res, next) => {
@@ -103,6 +113,7 @@ app.use("/host", (req, res, next) => {
     res.redirect("/login");
   }
 });
+app.use("/host", hostRouter);
 
 app.use(errorsController.pageNotFound);
 
@@ -110,10 +121,11 @@ app.use(errorsController.pageNotFound);
 mongoose
   .connect(DB_PATH)
   .then(() => {
+    console.log("Connected to MongoDB successfully");
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
-    console.log("Error while connecting to mongo: ", err);
+    console.error("Error while connecting to MongoDB:", err);
   });
