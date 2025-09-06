@@ -26,7 +26,7 @@ app.set("views", "views");
 
 // Environment variables from .env
 const DB_PATH = process.env.MONGO_URI;
-const PORT = process.env.PORT || 3010;
+const PORT = process.env.PORT || 10000;
 const SESSION_SECRET = process.env.SESSION_SECRET || "default_secret";
 
 if (!DB_PATH) {
